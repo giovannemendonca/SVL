@@ -6,6 +6,9 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import FormEditBooks from '../components/Books/FormEditBook';
+import NavBar from '../components/NavBar/NabBar'
+
+
 
 const Th = styled.th`
   background-color: rgba(58, 122, 179, 0.775);
@@ -51,7 +54,7 @@ function Books() {
 
   return (
     <>
-
+      <NavBar/>
       <HeaderBook>
         <h2>Livros</h2>
 
@@ -68,7 +71,7 @@ function Books() {
 
           </ContainerSearch>
 
-          <Link className='link' to={"/registerClient"}>Cadastrar livro</Link>
+          <Link className='link' to={"/app/registerClient"}>Cadastrar livro</Link>
 
         </ContainerButton>
       </HeaderBook>

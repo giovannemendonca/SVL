@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import FormEdit from '../components/clients/FormEditClients';
-
+import NavBar from '../components/NavBar/NabBar'
 const Th = styled.th`
   background-color: rgba(58, 122, 179, 0.775);
   border-radius: 8px;
@@ -52,7 +52,7 @@ function tableCliente() {
   return (
 
     <>
-
+      <NavBar/>
       <HeaderClients>
         <h2>CLientes</h2>
 
@@ -72,7 +72,7 @@ function tableCliente() {
 
           </ContainerSearch>
 
-         <Link className='link' to={"/registerClient"}>Cadastrar cliente</Link>
+         <Link className='link' to={"/app/registerClient"}>Cadastrar cliente</Link>
         </ContainerButton>
 
 

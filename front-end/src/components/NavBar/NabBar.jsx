@@ -34,7 +34,7 @@ function NavBar() {
 
       <Container>
         <Logo>
-          <Link className='linkLogo' to={"/"}>SVL</Link>
+          <Link className='linkLogo' to={"/app"}>SVL</Link>
         </Logo>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -51,17 +51,17 @@ function NavBar() {
 
             <NavDropdown title="LIVROS" id="collasible-nav-dropdown">
               <ContainerLink>
-                <Link className='linkNav' to={"/books"}>LIVROS</Link>
+                <Link className='linkNav' to={"/app/books"}>LIVROS</Link>
                 <DividerLink></DividerLink>
-                <Link className='linkNav' to={"/registerBook"}>Cadastrar livro</Link>
+                <Link className='linkNav' to={"/app/registerBook"}>Cadastrar livro</Link>
               </ContainerLink>
             </NavDropdown>
 
             <NavDropdown title="CLIENTES" id="collasible-nav-dropdown">
               <ContainerLink>
-                <Link className='linkNav' to={"/clientes"}>CLIENTES</Link>
+                <Link className='linkNav' to={"/app/clientes"}>CLIENTES</Link>
                 <DividerLink></DividerLink>
-                <Link className='linkNav' to={"/registerClient"}>Cadastrar cliente</Link>
+                <Link className='linkNav' to={"/app/registerClient"}>Cadastrar cliente</Link>
               </ContainerLink>
             </NavDropdown>
 

@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
+import NavBar from '../NavBar/NabBar';
 
 
 const ContainerButtom = styled.div`
