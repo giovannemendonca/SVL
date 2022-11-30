@@ -38,21 +38,17 @@ const Logout = styled.div`
   padding: 8px 0 6px 32px;
   cursor: pointer;
 
-
-
 `
-
-
 
 function NavBar() {
 
 
-  const { user, logout } = useContext(UserContext);
+  const { username, logout , login} = useContext(UserContext);
 
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-
+        {console.log(login)}
       <Container>
         <Logo>
           <Link className='linkLogo' to={"/app"}>SVL</Link>
@@ -90,7 +86,7 @@ function NavBar() {
           </Nav>
 
           <Nav >
-            <Nav.Link> <IconUser><SlUser /></IconUser>{user}</Nav.Link>
+            <Nav.Link> <IconUser><SlUser /></IconUser>{username}</Nav.Link>
 
             <Nav.Link onClick={logout}> <IconUser> <IoMdExit/></IconUser> Sair</Nav.Link>
           </Nav>

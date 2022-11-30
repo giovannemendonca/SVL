@@ -6,8 +6,10 @@ export const UserContext = React.createContext();
 
 export const UserStorage = ({ children }) => {
 
-    const [user, setUser] = useState(null);
+    const [username, setUserusername] = useState(null);
     const [userID, setUserId] = useState(null);
+    const [login, setLogin] = useState(null)
+
     const navigate = useNavigate();
 
 
@@ -21,9 +23,9 @@ export const UserStorage = ({ children }) => {
                 }
             }).then((response) => {
                 const json = response.data;
-                setUser(json.username)
+                setUserusername(json.username)
                 setUserId(json.id)
-                console.log('deu certo')
+                setLogin(true);
                 navigate('app')
             }).catch((err) => {
                 console.log(err.message.response)
@@ -52,7 +54,7 @@ export const UserStorage = ({ children }) => {
     }
 
     async function logout() {
-        setUser(null);
+        setUserusername(null);
         setUserId(null)
         localStorage.removeItem('token')
         localStorage.removeItem('id')
@@ -77,7 +79,7 @@ export const UserStorage = ({ children }) => {
 
 
     return (
-        <UserContext.Provider value={{ userLogin, user, userID, logout }}  >
+        <UserContext.Provider value={{ userLogin, username, userID,login ,logout }}  >
             {children}
         </UserContext.Provider>
     );

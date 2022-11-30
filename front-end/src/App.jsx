@@ -6,6 +6,7 @@ import RegisterBook from "./components/Books/RegisterBook"
 import Login from "./pages/Login"
 import Home from "./pages/Home"
 import { UserStorage } from "../UserContext"
+import ProtectedRoute from "./routes/ProtectedRoute"
 
 function App() {
 
@@ -14,12 +15,51 @@ function App() {
 
       <UserStorage>
         <Routes>
-          <Route path="/" exact element={<Login />} />
-          <Route path="app" element={<Home />} />
-          <Route path="/app/clientes" element={<Cliente />} />
-          <Route path="/app/registerClient" element={<RegisterClient />} />
-          <Route path="/app/books" element={<Books />} />
-          <Route path="/app/registerBook" element={<RegisterBook />} />
+          <Route
+            path="/"
+            exact
+            element={<Login />}
+          />
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/app/clientes"
+            element={
+              <ProtectedRoute>
+                <Cliente />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/app/registerClient"
+            element={
+              <ProtectedRoute>
+                <RegisterClient />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/app/books"
+            element={
+              <ProtectedRoute>
+                <Books />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/app/registerBook"
+            element={
+              <ProtectedRoute>
+                <RegisterBook />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
 
       </UserStorage>
