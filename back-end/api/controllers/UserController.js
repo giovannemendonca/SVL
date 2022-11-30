@@ -9,11 +9,8 @@ function cryptoPassword(password) {
   return crypto.createHash("sha256").update(password).digest("hex");
 }
 
-
-
 class UserControllers {
   //Criar Usuário
-
   static async createUser(req, res) {
     try {
       const { user, email, cpf, password } = req.body;
@@ -28,7 +25,7 @@ class UserControllers {
   }
 
   // Valida Usuário e retorna o token
-  static async validateUser(req, res) {
+  static async validateToken(req, res) {
     const user = req.body.user;
     const password = cryptoPassword(req.body.password);
 
@@ -43,25 +40,30 @@ class UserControllers {
       if (!isUser) {
         return res.status(401).json({ message: "Usuario não encontrado" });
       }
-      const token = jwt.sign({ id: isUser.id, user: isUser.user }, SECRET, {
-        expiresIn: 300,
+      const token = jwt.sign({ id: isUser.id }, SECRET, {
+        expiresIn:1000 
       });
-      res.status(200).json({ auth: true, token: token });
+      res.status(200).json({ token: token, id: isUser.id });
     } catch (error) {
       res.status(200).json(error.message);
     }
   }
 
-  //Retorna todos os usuários se usuário estiver autenticado
 
-  static async searchUser(req, res) {
+
+  //Retorna o usuário que esta logado se estiver autenticado
+  static async getUser(req, res) {
+    const id = req.body.id;
     try {
-      const UserAll = await db.Users.findAll();
-      res.status(200).json(UserAll);
+      const user = await db.Users.findOne({ where: { id: Number(id) } });
+      res.status(200).json({ username: user.user, id: user.id });
+
     } catch (error) {
       res.status(500).json(error.message);
     }
   }
+
+
 }
 
 module.exports = UserControllers;

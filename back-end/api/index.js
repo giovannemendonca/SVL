@@ -1,14 +1,11 @@
-const express = require('express')
-const router = require('./routes')
-
+const express = require("express");
+const router = require("./routes");
 const port = 5051;
 const app = express();
 
-
-router(app)
+router(app);
 
 
 app.listen(port, () => {
-    console.log('servidor rondando http://localhost:5051')
-
-})
+  console.log("servidor rondando http://localhost:5051");
+});

@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    ".gitignore": true,
+    "index.html": true,
+    "package-lock.json":true,
+    "vite.config.js":true,
+    "package.json": true
+  }
+}

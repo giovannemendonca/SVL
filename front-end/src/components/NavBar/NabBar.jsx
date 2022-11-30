@@ -5,6 +5,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SlUser } from "react-icons/sl"
+import { IoMdExit } from "react-icons/io"
+import { useContext } from 'react';
+import { UserContext } from '../../../UserContext';
 
 const ContainerLink = styled.div`
   display: flex;
@@ -25,10 +28,28 @@ const IconUser = styled.span`
   font-size: 24px;
   padding: 8px;
 `
+const Logout = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  color: #aaa;
+  font-size: 16px;
+  padding: 8px 0 6px 32px;
+  cursor: pointer;
+
+
+
+`
 
 
 
 function NavBar() {
+
+
+  const { user, logout } = useContext(UserContext);
+
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
 
@@ -68,8 +89,10 @@ function NavBar() {
 
           </Nav>
 
-          <Nav>
-            <Nav.Link> <IconUser><SlUser /></IconUser>Admin</Nav.Link>
+          <Nav >
+            <Nav.Link> <IconUser><SlUser /></IconUser>{user}</Nav.Link>
+
+            <Nav.Link onClick={logout}> <IconUser> <IoMdExit/></IconUser> Sair</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

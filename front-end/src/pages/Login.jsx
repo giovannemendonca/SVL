@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-
+import { UserContext } from '../../UserContext';
 
 
 const ContainerLogin = styled.main`
@@ -8,29 +8,55 @@ const ContainerLogin = styled.main`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(155, 181, 195, 0.542);
+    background-color: #eee;
 `
 
-
-
-
-
 export default function TelaLogin() {
+
+
+    const { userLogin } = useContext(UserContext)
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        userLogin(username, password)
+        setUsername('')
+        setPassword('')
+    }
+
 
     return (
 
         < ContainerLogin>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h1 className="h3 mb-3 fw-normal">Login</h1>
                 <div className="form-floating mb-1">
-                    <input type="usuario" className="form-control form-control-lg" id="usuario" placeholder="usuario" />
+                    <input
+                        type="usuario"
+                        className="form-control form-control-lg"
+                        id="usuario"
+                        placeholder="usuario"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
                     <label htmlFor="usuario">Usuário</label>
 
 
                 </div>
                 <div className="form-floating">
-                    <input type="password" className="form-control" id="senha" placeholder="Password"  />
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="senha"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                     <label htmlFor="senha">Senha</label>
                 </div>
 

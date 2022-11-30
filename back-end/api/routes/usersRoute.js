@@ -18,8 +18,11 @@ function verifyJWT(req, res, next) {
   });
 }
 
-router.get("/users", verifyJWT, userControllers.searchUser);
-router.post("/users/register", userControllers.createUser);
-router.post("/users/login", userControllers.validateUser);
+router.post("/login", userControllers.validateToken);
+router.post("/login/users", verifyJWT, userControllers.getUser);
+router.post("/users/register",verifyJWT, userControllers.createUser);
+
+
+
 
 module.exports = router;

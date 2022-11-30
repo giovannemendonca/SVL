@@ -15,6 +15,6 @@ class CryptoUser {
 
 }
 
-
+module.exports = cryptoPassword;
 module.exports = CryptoUser;
 
