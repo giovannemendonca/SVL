@@ -71,7 +71,7 @@ function Books() {
 
           </ContainerSearch>
 
-          <Link className='link' to={"/app/registerClient"}>Cadastrar livro</Link>
+          <Link className='link' to={"/app/registerBook"}>Cadastrar livro</Link>
 
         </ContainerButton>
       </HeaderBook>

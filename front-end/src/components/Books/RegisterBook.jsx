@@ -92,11 +92,11 @@ function RegisterBook() {
 
                         <Row className="mb-4">
                             <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                <Form.Label>Numero  </Form.Label>
+                                <Form.Label>Valor</Form.Label>
                                 <Form.Control
                                     required
-                                    type="text"
-                                    placeholder="numero"
+                                    type="number"
+                                    placeholder="R$"
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -109,11 +109,12 @@ function RegisterBook() {
                             </Form.Group>
                         </Row>
 
-
                         <ContainerButtom>
                             <Button type="submit">Cadastrar livro</Button>
                             <Button type='reset'>Limpar</Button>
                         </ContainerButtom>
+
+                        
 
                     </Form>
 
