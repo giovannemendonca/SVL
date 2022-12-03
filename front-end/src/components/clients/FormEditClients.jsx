@@ -6,8 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
-import NavBar from '../NavBar/NabBar';
-
+import { useForm } from 'react-hook-form';
+import api from '../../api/Api';
+import { useNavigate } from 'react-router-dom';
 
 const ContainerButtom = styled.div`
 display: flex;
@@ -15,10 +16,30 @@ gap: 20px;
 `
 
 
-function FormEdit({ show, fullscreen, setShow }) {
+
+function FormEdit({ show, fullscreen, setShow, data }) {
+
+    const { register, handleSubmit } = useForm()
+    const navigate = useNavigate();
+
+
+    const updateClients = async (data) => {
+        const token = localStorage.getItem('token')
+        await api.put('/clients', data, { headers: { "x-acess-token": token } })
+            .then(response => alert(response.data.message))
+            .catch((error) => console.log(error.message))
+        setShow(false)
+
+    }
+
+    const handleSubmitClient = (e) => {
+        updateClients(e)
+    }
+
     return (
 
         <>
+
             <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Editar Cliente</Modal.Title>
@@ -26,7 +47,9 @@ function FormEdit({ show, fullscreen, setShow }) {
                 <Modal.Body>
                     <Container>
 
-                        <Form noValidate  >
+                        <Form onSubmit={handleSubmit(handleSubmitClient)}  >
+
+
                             <Row className="mb-4">
                                 <Form.Group as={Col} md="2" controlId="validationCustom01">
                                     <Form.Label>ID</Form.Label>
@@ -34,6 +57,9 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="id"
+                                        defaultValue={data?.id}
+                                        readOnly
+                                        {...register('id')}
                                     />
                                 </Form.Group>
                             </Row>
@@ -44,25 +70,32 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="nome"
+                                        defaultValue={data?.nome}
+                                        {...register('nome')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                    <Form.Label>Telefone</Form.Label>
+                                    <Form.Label>Cpf</Form.Label>
                                     <Form.Control
                                         required
                                         type="text"
-                                        placeholder="telefone"
+                                        placeholder="cpf"
+                                        defaultValue={data?.cpf}
+                                        readOnly
+                                        {...register('cpf')}
                                     />
                                 </Form.Group>
                             </Row>
 
                             <Row className="mb-4">
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                    <Form.Label>CPF</Form.Label>
+                                    <Form.Label>Telefone</Form.Label>
                                     <Form.Control
                                         required
                                         type="text"
-                                        placeholder="cpf"
+                                        placeholder="telefone"
+                                        defaultValue={data?.telefone}
+                                        {...register('telefone')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -71,6 +104,8 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="date"
                                         placeholder="data de nascimento"
+                                        defaultValue={data?.dataNascimento}
+                                        {...register('dataNascimento')}
                                     />
                                 </Form.Group>
                             </Row>
@@ -83,6 +118,8 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="cep"
+                                        defaultValue={data?.cep}
+                                        {...register('cep')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -91,6 +128,8 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="endereço"
+                                        defaultValue={data?.endereco}
+                                        {...register('endereco')}
                                     />
                                 </Form.Group>
 
@@ -103,6 +142,8 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="numero"
+                                        defaultValue={data?.numero}
+                                        {...register('numero')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -111,6 +152,8 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="complemento"
+                                        defaultValue={data?.complemento}
+                                        {...register('complemento')}
                                     />
                                 </Form.Group>
                             </Row>
@@ -122,6 +165,8 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="cidade"
+                                        defaultValue={data?.cidade}
+                                        {...register('cidade')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -130,12 +175,14 @@ function FormEdit({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="estado"
+                                        defaultValue={data?.estado}
+                                        {...register('estado')}
                                     />
                                 </Form.Group>
                             </Row>
 
                             <ContainerButtom>
-                                <Button onClick={() => setShow(false)} >Salvar alterações</Button>
+                                <Button type='submit'  >Salvar alterações</Button>
                             </ContainerButtom>
 
                         </Form>

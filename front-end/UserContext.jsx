@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from './src/api/Api';
 
 export const UserContext = React.createContext();
@@ -17,7 +17,7 @@ export const UserStorage = ({ children }) => {
     async function getUser(token, id) {
 
         try {
-            const response = await api.post('/login/users', { id: id }, {
+            await api.post('/login/users', { id: id }, {
                 headers: {
                     "x-acess-token": token
                 }
@@ -28,7 +28,7 @@ export const UserStorage = ({ children }) => {
                 setLogin(true);
                 navigate('app')
             }).catch((err) => {
-                console.log(err.message.response)
+                
 
             })
 
@@ -79,7 +79,7 @@ export const UserStorage = ({ children }) => {
 
 
     return (
-        <UserContext.Provider value={{ userLogin, username, userID,login ,logout }}  >
+        <UserContext.Provider value={{ userLogin, username, userID, login, logout }}  >
             {children}
         </UserContext.Provider>
     );

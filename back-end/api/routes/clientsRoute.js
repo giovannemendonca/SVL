@@ -3,9 +3,7 @@ const clientsControllers = require("../controllers/ClientsControlle");
 const router = Router();
 const jwt = require("jsonwebtoken");
 
-
 const SECRET = "secret";
-
 
 function verifyJWT(req, res, next) {
   const token = req.headers["x-acess-token"];
@@ -18,11 +16,9 @@ function verifyJWT(req, res, next) {
   });
 }
 
-
-
+router.get("/clients", verifyJWT, clientsControllers.getClientsAll);
+router.put("/clients", verifyJWT, clientsControllers.updateClients)
 router.post("/clients", verifyJWT, clientsControllers.createClient);
-router.get("/clients/:id", verifyJWT, clientsControllers.getClientsAll);
-
 
 
 module.exports = router;

@@ -48,7 +48,6 @@ function NavBar() {
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        {console.log(login)}
       <Container>
         <Logo>
           <Link className='linkLogo' to={"/app"}>SVL</Link>
