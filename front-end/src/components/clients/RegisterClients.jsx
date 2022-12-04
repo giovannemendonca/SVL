@@ -7,7 +7,9 @@ import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form'
 import NavBar from '../NavBar/NabBar';
-
+import api from '../../api/Api';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ContainerButtom = styled.div`
 display: flex;
@@ -22,13 +24,25 @@ const ContainerRegisterClient = styled.section`
 function RegisterClient() {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
-    const [nome, setNome] = useState('')
 
-    const data = (event) => {
-        console.log(event)
+    const handelSubmitClients = (e) => createClient(e)
+    const createClient = async (data) => {
 
+        try {
+            const token = localStorage.getItem('token')
+            await api.post('/clients', data, { headers: { "x-acess-token": token } })
+                .then(response => alert(response.data.message))
+
+        } catch (error) {
+            alert(error.response.data)
+        }
+        finally {
+            navigate('/app/clientes')
+        }
     }
+
 
 
     return (
@@ -37,8 +51,9 @@ function RegisterClient() {
             <NavBar />
             <ContainerRegisterClient>
                 <Container>
+                    <Link className='link'  to={"/app/clientes"}>Voltar</Link>
 
-                    <Form noValidate onSubmit={handleSubmit(data)} >
+                    <Form style={{marginTop: "32px"}} onSubmit={handleSubmit(handelSubmitClients)} >
                         <Row className="mb-4">
                             <Form.Group as={Col} md="6" controlId="validationCustom01">
                                 <Form.Label>Nome</Form.Label>
@@ -50,24 +65,24 @@ function RegisterClient() {
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                <Form.Label>Telefone</Form.Label>
-                                <Form.Control
-                                    required
-                                    type="text"
-                                    placeholder="telefone"
-                                    {...register('telefone')}
-                                />
-                            </Form.Group>
-                        </Row>
-
-                        <Row className="mb-4">
-                            <Form.Group as={Col} md="6" controlId="validationCustom01">
                                 <Form.Label>CPF</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
                                     placeholder="cpf"
                                     {...register('cpf')}
+                                />
+                            </Form.Group>
+                        </Row>
+
+                        <Row className="mb-4">
+                            <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                <Form.Label>Telefone</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    placeholder="telefone"
+                                    {...register('telefone')}
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -98,7 +113,7 @@ function RegisterClient() {
                                     required
                                     type="text"
                                     placeholder="endereço"
-                                    {...register('endereço')}
+                                    {...register('endereco')}
                                 />
                             </Form.Group>
 
@@ -149,6 +164,7 @@ function RegisterClient() {
                         <ContainerButtom>
                             <Button type="submit">Cadastrar Cliente</Button>
                             <Button type='reset'>Limpar</Button>
+
                         </ContainerButtom>
 
                     </Form>
