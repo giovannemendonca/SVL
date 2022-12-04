@@ -58,6 +58,7 @@ function tableCliente() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     getClients(token)
+    setClietEdit(null)
 
   }, [show])
 
@@ -142,7 +143,7 @@ function tableCliente() {
         </tbody>
       </Table>
 
-      {<FormEdit show={show} setShow={setShow} fullscreen={fullscreen} data={clientEdit} />}
+      {show ? <FormEdit show={show} setShow={setShow} fullscreen={fullscreen} data={clientEdit} /> : null}
     </>
   );
 }
