@@ -8,16 +8,12 @@ import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import api from '../../api/Api';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
+
 
 const ContainerButtom = styled.div`
 display: flex;
 gap: 20px;
 `
-
-
 
 function FormEdit({ show, fullscreen, setShow, data }) {
 
@@ -31,8 +27,6 @@ function FormEdit({ show, fullscreen, setShow, data }) {
             .catch((error) => console.log(error.message))
         setShow(false)
     }
-
-
 
     const handleSubmitClient = (e) => {
         updateClients(e)

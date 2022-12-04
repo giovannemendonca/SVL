@@ -42,6 +42,9 @@ function tableCliente() {
   const [show, setShow] = useState(false);
   const [clients, setClients] = useState([])
   const [clientEdit, setClietEdit] = useState(null)
+  const [cpf, setCpf] = useState("")
+  const [filter, setFilter] = useState(true)
+
 
 
   function handleShow(breakpoint) {
@@ -49,18 +52,11 @@ function tableCliente() {
     setShow(true);
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    getClients(token)
+  function cleanFilter(){
+    setFilter(false)
+    setCpf("")
+  }
 
-  }, [])
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    getClients(token)
-    setClietEdit(null)
-
-  }, [show])
 
   async function getClients(token) {
     const response = await api.get("/clients", {
@@ -72,9 +68,40 @@ function tableCliente() {
     setClients(response.data)
   }
 
+  async function getClientCPF() {
+
+    const token = localStorage.getItem('token')
+    try {
+      await api.post('/clients/cpf', { cpf: cpf }, {
+        headers: {
+          "x-acess-token": token
+        }
+
+      }).then(response => {
+        setClients([response.data])
+
+      })
+        .catch((error) => alert(error.response.data.message))
+    } catch (error) {
+
+    }
+  }
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    getClients(token)
+  }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    getClients(token)
+    setClietEdit(null)
+    setFilter(true)
+
+  }, [show, filter])
+
+
 
   return (
-
 
     <>
       <NavBar />
@@ -90,14 +117,25 @@ function tableCliente() {
                 required
                 type="text"
                 placeholder="Digite o Cpf"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
               />
+
+
             </Form.Group>
 
-            <Button className="outline-primary linkModal">Consultar Cliente </Button>
+            <Button className="outline-primary linkModal" onClick={getClientCPF}>
+              Consultar Cliente
+            </Button>
+
+            <Button style={{ margin: '0 8px' }} className="outline-primary linkModal" onClick={cleanFilter} >
+              Limpar filtro
+            </Button>
 
           </ContainerSearch>
 
           <Link className='link' to={"/app/registerClient"}>Cadastrar cliente</Link>
+
         </ContainerButton>
 
 
@@ -132,14 +170,12 @@ function tableCliente() {
             <td>{client.cidade}</td>
             <td>{client.estado}</td>
             <th><Button variant="outline-info" size='sm' onClick={() => {
-
               setClietEdit(client)
               handleShow(true)
-
-            }}>editar</Button></th>
+            }}>
+              editar
+            </Button></th>
           </tr>)}
-
-
         </tbody>
       </Table>
 

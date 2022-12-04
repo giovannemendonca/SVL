@@ -1,6 +1,5 @@
 const db = require("../models");
 
-
 //Cria um novo cliente
 class ClientsControllers {
   static async createClient(req, res) {
@@ -13,9 +12,9 @@ class ClientsControllers {
           cpf: cpf,
         },
       });
-      if (isClient)  throw new Error('Cliente Já Cadastrado');
+      if (isClient) throw new Error("Cliente Já Cadastrado");
       const newClient = await db.Clients.create(body);
-      res.status(200).json({message: 'Cliente cadastrado com sucesso!!!'});
+      res.status(200).json({ message: "Cliente cadastrado com sucesso!!!" });
     } catch (error) {
       res.status(500).json(error.message);
     }
@@ -31,6 +30,24 @@ class ClientsControllers {
       res.status(200).json(clients);
     } catch (erro) {
       res.status(500).json(erro);
+    }
+  }
+
+  //Pega Cliente por CPF
+
+  static async getClientsToCpf(req, res) {
+    try {
+      const {cpf} = req.body;
+      const client = await db.Clients.findOne({where: {
+        cpf: cpf
+      }});
+      if(!client){
+       return res.status(404).json({message: 'Cliente não encontrado'})
+      }
+      return res.status(200).json(client)
+
+    } catch (error) {
+      console.log(error)
     }
   }
 
