@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import FormEdit from '../components/clients/FormEditClients';
 import NavBar from '../components/NavBar/NabBar'
 import api from '../api/Api';
+import { useNavigate } from 'react-router-dom';
 
 const Th = styled.th`
   background-color: rgba(58, 122, 179, 0.775);
@@ -45,6 +46,7 @@ function tableCliente() {
   const [cpf, setCpf] = useState("")
   const [filter, setFilter] = useState(true)
 
+  const navigate = useNavigate()
 
 
   function handleShow(breakpoint) {
@@ -52,20 +54,25 @@ function tableCliente() {
     setShow(true);
   }
 
-  function cleanFilter(){
+  function cleanFilter() {
     setFilter(false)
     setCpf("")
   }
 
 
   async function getClients(token) {
-    const response = await api.get("/clients", {
+    await api.get("/clients", {
       headers: {
         "x-acess-token": token
       }
-    })
+    }).then(response => setClients(response.data))
+      .catch((error) => {
+        if (error?.response?.statusText === 'Unauthorized') {
+          alert('Sessão expirada \nEfetue o login Novamente')
+          navigate('/')
+        }
+      })
 
-    setClients(response.data)
   }
 
   async function getClientCPF() {

@@ -41,7 +41,7 @@ class UserControllers {
         return res.status(401).json({ message: "Usuario não encontrado" });
       }
       const token = jwt.sign({ id: isUser.id }, SECRET, {
-        expiresIn:1000 
+        expiresIn:3600
       });
       res.status(200).json({ token: token, id: isUser.id });
     } catch (error) {
