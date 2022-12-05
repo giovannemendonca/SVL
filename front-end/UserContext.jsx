@@ -28,8 +28,7 @@ export const UserStorage = ({ children }) => {
                 setLogin(true);
                 navigate('app')
             }).catch((err) => {
-                
-
+                console.log(err)
             })
 
         } catch (error) {
@@ -49,7 +48,9 @@ export const UserStorage = ({ children }) => {
             getUser(token, id)
 
         } catch (error) {
-            alert('Usuário ou senha Inválida')
+            if(error.message === 'Network Error'){
+                alert('Erro de Conexão')
+            }
         }
     }
 
