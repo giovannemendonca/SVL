@@ -6,7 +6,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
-import NavBar from '../NavBar/NabBar';
+import { useForm } from 'react-hook-form';
+import api from '../../api/Api';
 
 
 const ContainerButtom = styled.div`
@@ -15,10 +16,26 @@ gap: 20px;
 `
 
 
-function FormEditBooks({ show, fullscreen, setShow }) {
+function FormEditBooks({ show, fullscreen, setShow, data }) {
+
+    const { register, handleSubmit } = useForm()
+
+    const handleSubmitBook = (e) => {
+        updateBook(e)
+    }
+
+    const updateBook = async (data) => {
+        const token = localStorage.getItem('token')
+        await api.put('/books', data, { headers: { "x-acess-token": token } })
+            .then(response => alert(response?.data?.message))
+            .catch((error) => console.log(error.message))
+        setShow(false)
+    }
+
     return (
 
         <>
+
             <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
 
                 <Modal.Header closeButton>
@@ -27,7 +44,7 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                 <Modal.Body>
                     <Container>
 
-                        <Form noValidate  >
+                        <Form onSubmit={handleSubmit(handleSubmitBook)}  >
 
 
                             <Row className="mb-4">
@@ -39,6 +56,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="id"
+                                        defaultValue={data ? data.id : null}
+                                        {...register('id')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -47,6 +66,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="titulo"
+                                        defaultValue={data ? data.titulo : null}
+                                        {...register('titulo')}
                                     />
                                 </Form.Group>
 
@@ -60,6 +81,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="autor"
+                                        defaultValue={data ? data.autor : null}
+                                        {...register('autor')}
                                     />
                                 </Form.Group>
 
@@ -69,6 +92,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="editora"
+                                        defaultValue={data ? data.editora : null}
+                                        {...register('editora')}
                                     />
                                 </Form.Group>
                             </Row>
@@ -81,6 +106,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="numero de paginas"
+                                        defaultValue={data ? data.numeroPaginas : null}
+                                        {...register('numeroPaginas')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -89,6 +116,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="text"
                                         placeholder="isbn-13"
+                                        defaultValue={'123456789411'}
+                                        {...register('isbn13')}
                                     />
                                 </Form.Group>
 
@@ -101,6 +130,8 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="number"
                                         placeholder="quantidade"
+                                        defaultValue={data ? data.quantidade : null}
+                                        {...register('quantidade')}
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
@@ -109,12 +140,14 @@ function FormEditBooks({ show, fullscreen, setShow }) {
                                         required
                                         type="date"
                                         placeholder="data de publicação"
+                                        defaultValue={'1995-01-25'}
+                                        {...register('dataPublicacao')}
                                     />
                                 </Form.Group>
                             </Row>
 
                             <ContainerButtom>
-                                <Button onClick={() => setShow(false)} >Salvar alterações</Button>
+                                <Button type='submit' >Salvar alterações</Button>
                             </ContainerButtom>
 
                         </Form>

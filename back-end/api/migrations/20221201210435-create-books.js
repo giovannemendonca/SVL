@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       isbn13: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       numeroPaginas: {
         type: Sequelize.INTEGER

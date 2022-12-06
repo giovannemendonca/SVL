@@ -41,7 +41,9 @@ function tableCliente() {
 
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
+
   const [clients, setClients] = useState([])
+
   const [clientEdit, setClietEdit] = useState(null)
   const [cpf, setCpf] = useState("")
   const [filter, setFilter] = useState(true)

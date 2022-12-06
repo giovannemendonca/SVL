@@ -1,11 +1,9 @@
 const { Router } = require("express");
-const userControllers = require("../controllers/UserControllers.js");
-const jwt = require("jsonwebtoken");
+const booksControllers = require("../controllers/BooksControllers");
 const router = Router();
-
+const jwt = require("jsonwebtoken");
 
 const SECRET = "secret";
-
 
 function verifyJWT(req, res, next) {
   const token = req.headers["x-acess-token"];
@@ -18,11 +16,8 @@ function verifyJWT(req, res, next) {
   });
 }
 
-router.post("/login", userControllers.validateToken);
-router.post("/login/users", verifyJWT, userControllers.getUser);
-router.post("/users/register",verifyJWT, userControllers.createUser);
-
-
-
-
+router.post("/books", verifyJWT, booksControllers.createBooks);
+router.get("/books", verifyJWT, booksControllers.getBooks);
+router.get("/books/:id", verifyJWT, booksControllers.getBookToID)
+router.put("/books", verifyJWT, booksControllers.updateBooks)
 module.exports = router;

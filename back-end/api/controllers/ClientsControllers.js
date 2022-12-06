@@ -1,7 +1,10 @@
 const db = require("../models");
 
-//Cria um novo cliente
 class ClientsControllers {
+
+
+//Cria um novo cliente
+
   static async createClient(req, res) {
     try {
       const body = req.body;
@@ -37,17 +40,18 @@ class ClientsControllers {
 
   static async getClientsToCpf(req, res) {
     try {
-      const {cpf} = req.body;
-      const client = await db.Clients.findOne({where: {
-        cpf: cpf
-      }});
-      if(!client){
-       return res.status(404).json({message: 'Cliente não encontrado'})
+      const { cpf } = req.body;
+      const client = await db.Clients.findOne({
+        where: {
+          cpf: cpf,
+        },
+      });
+      if (!client) {
+        return res.status(404).json({ message: "Cliente não encontrado" });
       }
-      return res.status(200).json(client)
-
+      return res.status(200).json(client);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -58,7 +62,6 @@ class ClientsControllers {
       const data = req.body;
 
       await db.Clients.update(data, { where: { id: id } });
-      console.log(id);
       res.status(200).json({ message: "Alterações salvas com sucesso" });
     } catch (error) {
       return res.status(200).json(error.message);
