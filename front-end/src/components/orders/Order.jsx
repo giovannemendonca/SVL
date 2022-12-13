@@ -19,7 +19,7 @@ const Order = ({ client, carrinho, setCarrinho, setClient }) => {
     e.preventDefault()
     try {
       const token = localStorage.getItem('token')
-      await api.post('/order', orderFinal, { headers: { "x-acess-token": token } })
+      await api.post('/app/order', orderFinal, { headers: { "x-acess-token": token } })
         .then(response =>{
           alert('Pedido Realizado com sucesso!')
           navigate('/app/orders')         

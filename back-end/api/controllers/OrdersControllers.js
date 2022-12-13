@@ -1,11 +1,8 @@
 const db = require("../models");
 
 class OrdersControllers {
-
-
+  //Criar um novo Pedido
   static async createOrder(req, res) {
-
-    //Criar um novo Pedido
     try {
       const body = req.body;
 
@@ -46,20 +43,26 @@ class OrdersControllers {
             },
           }
         );
-        return res.status(200).json({message: 'Livro cadastrado com sucesso!'});
+        return res
+          .status(201)
+          .json({ message: "Pedido cadastrado com sucesso!" });
       }
       res.status(200).json(orderCreate);
     } catch (error) {
       res.status(500).json(error.message);
     }
-
-
-
-
-
-
-
   }
+  
+    // Pega todos os livros;
+    static async allOrders(req, res) {
+      try {
+        const orders = await db.Orders.findAll();
+        if (!orders) return new Error("Nenhum Pedido localizado");
+        res.status(200).json(orders);
+      } catch (error) {
+        res.status(500).json(error.message);
+      }
+    }
 }
 
 module.exports = OrdersControllers;

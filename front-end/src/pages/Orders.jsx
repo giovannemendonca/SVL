@@ -39,8 +39,28 @@ const ContainerSearch = styled.div`
 
 function Ordens() {
 
-
     const [orders, setOrders] = useState([])
+
+
+
+    useEffect(() => {
+        allOrders();
+    }, [])
+
+
+
+    const allOrders = async () => {
+        
+        const token = localStorage.getItem('token')
+
+        await api.get('/app/orders', {
+            headers: {
+                "x-acess-token": token
+            }
+        }).then(response => setOrders(response.data))
+            .catch(error => console.log(error))
+    }
+
 
 
     return (
@@ -85,16 +105,33 @@ function Ordens() {
                     <tr>
                         <Th>Pedido ID</Th>
                         <Th>Cliente</Th>
-                        <Th>Telefone</Th>
+                        <Th>Cpf</Th>
                         <Th>Item</Th>
                         <Th>Quantidade</Th>
                         <Th>valor</Th>
                         <Th>Valor Final</Th>
+                        <Th></Th>
                     </tr>
                 </thead>
+                {console.log(orders)}
                 <tbody>
-
-
+                    {orders.map(order => <tr key={order.id}>    
+                        <td>{order.id}</td>
+                        <td>{order.nomeCliente}</td>
+                        <td>{order.cpf}</td>
+                        <td>{order.tituloLivro}</td>
+                        <td>{order.quantidade}</td>
+                        <td>R$ {order.valor}</td>
+                        <td>R$ {order.valorTotal}</td>
+                        <td>
+              <Button
+                variant='outline-info'
+                size='sm'
+                >
+                editar
+              </Button>
+            </td>
+                    </tr>)}
                 </tbody>
             </Table>
 

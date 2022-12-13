@@ -16,6 +16,7 @@ function verifyJWT(req, res, next) {
   });
 }
 
-router.post("/order", verifyJWT, orderControllers.createOrder);
+router.post("/app/order", verifyJWT, orderControllers.createOrder);
+router.get("/app/orders", verifyJWT, orderControllers.allOrders)
 
 module.exports = router;
