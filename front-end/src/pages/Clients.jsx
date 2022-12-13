@@ -91,7 +91,7 @@ function tableCliente() {
 
       })
         .catch((error) => alert(error.response.data.message))
-    } catch (error) {
+    } catch (error) { 
 
     }
   }

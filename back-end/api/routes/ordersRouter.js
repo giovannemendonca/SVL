@@ -17,6 +17,6 @@ function verifyJWT(req, res, next) {
 }
 
 router.post("/app/order", verifyJWT, orderControllers.createOrder);
-router.get("/app/orders", verifyJWT, orderControllers.allOrders)
-
+router.get("/app/orders", verifyJWT, orderControllers.allOrders);
+router.get("/app/order/:cpf", verifyJWT, orderControllers.OneOrder )
 module.exports = router;

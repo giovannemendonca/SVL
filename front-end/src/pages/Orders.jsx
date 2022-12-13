@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import NavBar from '../components/NavBar/NabBar'
 import api from '../api/Api';
+import FormEditOrder from '../components/orders/EditOrder';
 
 
 const Th = styled.th`
@@ -39,8 +40,13 @@ const ContainerSearch = styled.div`
 
 function Ordens() {
 
-    const [orders, setOrders] = useState([])
+    const [fullscreen, setFullscreen] = useState(true);
+    const [show, setShow] = useState(false);
 
+    const [orders, setOrders] = useState([])
+    const [orderEdit, setOrderEdit] = useState(null)
+    const [cpf, setCpf] = useState("")
+    const [filter, setFilter] = useState(true)
 
 
     useEffect(() => {
@@ -48,9 +54,23 @@ function Ordens() {
     }, [])
 
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        allOrders(token)
+        setOrderEdit(null)
+        setFilter(true)
+    
+      }, [show, filter])
+    
+
+    function handleShow(breakpoint) {
+        setFullscreen(breakpoint);
+        setShow(true);
+    }
+
 
     const allOrders = async () => {
-        
+
         const token = localStorage.getItem('token')
 
         await api.get('/app/orders', {
@@ -61,6 +81,31 @@ function Ordens() {
             .catch(error => console.log(error))
     }
 
+
+    async function getOrderToClient() {
+
+        const token = localStorage.getItem('token')
+        try {
+            await api.get(`/app/order/${cpf}`, {
+                headers: {
+                    "x-acess-token": token
+                }
+
+            }).then(response => {
+                setOrders(response.data)
+
+            })
+                .catch((error) => console.log(error))
+        } catch (error) {
+
+        }
+    }
+
+
+  function cleanFilter() {
+    setFilter(false)
+    setCpf("")
+  }
 
 
     return (
@@ -77,17 +122,19 @@ function Ordens() {
                             <Form.Control
                                 required
                                 type="text"
-                                placeholder="numero do pedido"
+                                placeholder="Digite o cpf do cliente"
+                                value={cpf}
+                                onChange={(e) => setCpf(e.target.value)}
                             />
 
 
                         </Form.Group>
 
-                        <Button className="outline-primary linkModal">
+                        <Button className="outline-primary linkModal" onClick={getOrderToClient}>
                             Consultar pedido
                         </Button>
 
-                        <Button style={{ margin: '0 8px' }} className="outline-primary linkModal" >
+                        <Button style={{ margin: '0 8px' }} className="outline-primary linkModal" onClick={cleanFilter}  >
                             Limpar filtro
                         </Button>
 
@@ -113,9 +160,8 @@ function Ordens() {
                         <Th></Th>
                     </tr>
                 </thead>
-                {console.log(orders)}
                 <tbody>
-                    {orders.map(order => <tr key={order.id}>    
+                    {orders.map((order, index) => <tr key={index}>
                         <td>{order.id}</td>
                         <td>{order.nomeCliente}</td>
                         <td>{order.cpf}</td>
@@ -124,17 +170,20 @@ function Ordens() {
                         <td>R$ {order.valor}</td>
                         <td>R$ {order.valorTotal}</td>
                         <td>
-              <Button
-                variant='outline-info'
-                size='sm'
-                >
-                editar
-              </Button>
-            </td>
+                            <Button
+                                variant='outline-info'
+                                size='sm'
+                                onClick={() => {
+                                    setOrderEdit(order)
+                                    handleShow(true)
+                                }}>
+                                Visualizar
+                            </Button>
+                        </td>
                     </tr>)}
                 </tbody>
             </Table>
-
+            {show && <FormEditOrder show={show} setShow={setShow} fullscreen={fullscreen} data={orderEdit} />}
         </>
     );
 }

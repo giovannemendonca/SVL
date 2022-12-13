@@ -52,17 +52,36 @@ class OrdersControllers {
       res.status(500).json(error.message);
     }
   }
-  
-    // Pega todos os livros;
-    static async allOrders(req, res) {
-      try {
-        const orders = await db.Orders.findAll();
-        if (!orders) return new Error("Nenhum Pedido localizado");
-        res.status(200).json(orders);
-      } catch (error) {
-        res.status(500).json(error.message);
-      }
+
+  // Pega todos os Pedido;
+  static async allOrders(req, res) {
+    try {
+      const orders = await db.Orders.findAll();
+      if (!orders) return new Error("Nenhum Pedido localizado");
+      res.status(200).json(orders);
+    } catch (error) {
+      res.status(500).json(error.message);
     }
+  }
+
+  //Pega todos os pedidos de um cliente
+
+  static async OneOrder(req, res) {
+    const { cpf } = req.params;
+
+    const order = await db.Orders.findAll({
+      where: {
+        cpf: cpf,
+      }
+    });
+
+    res.status(200).json(order)
+
+    try {
+    } catch (error) {
+      res.status(500).json(error)
+    }
+  }
 }
 
 module.exports = OrdersControllers;
