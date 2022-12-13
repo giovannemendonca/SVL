@@ -10,24 +10,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idCliente: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {model: 'Clients', key: 'id' }
+        type: Sequelize.STRING
       },
-
-      idBook: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {model: 'Books', key: 'id' }
+      cpf: {
+        type: Sequelize.STRING
+      },
+      nomeCliente: {
+        type: Sequelize.STRING
+      },
+      idLivro: {
+        type: Sequelize.STRING
+      },
+      tituloLivro: {
+        type: Sequelize.STRING
       },
       quantidade: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
-      desconto: {
-        type: Sequelize.FLOAT
+      valor: {
+        type: Sequelize.STRING
       },
       valorTotal: {
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

@@ -7,6 +7,8 @@ import Login from "./pages/Login"
 import Home from "./pages/Home"
 import { UserStorage } from "../UserContext"
 import ProtectedRoute from "./routes/ProtectedRoute"
+import Orders from "./pages/Orders"
+import RegisterOrdens from "./components/orders/RegisterOrdens"
 
 function App() {
 
@@ -60,7 +62,25 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/app/orders"
+            element={
+              <ProtectedRoute>
+                <Orders />  
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/app/registerOrders"
+            element={
+              <ProtectedRoute>
+                <RegisterOrdens />  
+              </ProtectedRoute>
+            }
+          />
         </Routes>
+
 
       </UserStorage>
     </div>

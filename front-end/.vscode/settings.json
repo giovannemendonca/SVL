@@ -5,7 +5,8 @@
     "index.html": true,
     "package-lock.json":true,
     "vite.config.js":true,
+    "public":true,
     "package.json": true,
-    "public":true
+    ".vscode": true
   }
 }

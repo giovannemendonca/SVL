@@ -57,6 +57,7 @@ function FormEditBooks({ show, fullscreen, setShow, data }) {
                                         type="text"
                                         placeholder="id"
                                         defaultValue={data ? data.id : null}
+                                        readOnly
                                         {...register('id')}
                                     />
                                 </Form.Group>
@@ -134,6 +135,20 @@ function FormEditBooks({ show, fullscreen, setShow, data }) {
                                         {...register('quantidade')}
                                     />
                                 </Form.Group>
+                                <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                <Form.Label>Valor</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="number"
+                                    step={"any"}
+                                    placeholder="R$"
+                                    defaultValue={data ? data.valor : null}
+                                    {...register('valor')}
+                                />
+                            </Form.Group>
+                            </Row>
+                            <Row className="mb-4">
+
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
                                     <Form.Label>Data de publicação</Form.Label>
                                     <Form.Control

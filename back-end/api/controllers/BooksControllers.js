@@ -1,4 +1,4 @@
-const db = require("../models");
+const   db = require("../models");
 
 class BooksControllers {
   //Cria um novo registro de livro
@@ -42,6 +42,28 @@ class BooksControllers {
       res.status(500).json(error.message)
     }
   }
+
+  // pega Livro pelo o Nome
+
+  static async getBookToName(req, res){
+    
+    try {
+      const {titulo} = req.params;
+
+      const bookToTitle = await db.Books.findOne({
+        where: {
+          titulo: titulo
+        }
+      });
+    
+      if(!bookToTitle) return new Error('Nenhum livro encontrado')
+      res.status(200).json(bookToTitle) 
+
+    } catch (error) {
+      res.status(500).json(error.message)
+    }
+  }
+
 
   // Atualizar Livro
   static async updateBooks(req, res) {

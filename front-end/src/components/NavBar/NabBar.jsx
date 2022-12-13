@@ -28,22 +28,12 @@ const IconUser = styled.span`
   font-size: 24px;
   padding: 8px;
 `
-const Logout = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  color: #aaa;
-  font-size: 16px;
-  padding: 8px 0 6px 32px;
-  cursor: pointer;
 
-`
 
 function NavBar() {
 
 
-  const { username, logout , login} = useContext(UserContext);
+  const { username, logout } = useContext(UserContext);
 
 
   return (
@@ -59,9 +49,9 @@ function NavBar() {
 
             <NavDropdown title="PEDIDOS" id="collasible-nav-dropdown">
               <ContainerLink>
-                <Link className='linkNav' to={"#"}>PEDIDOS</Link>
+                <Link className='linkNav' to={"/app/orders"}>PEDIDOS</Link>
                 <DividerLink></DividerLink>
-                <Link className='linkNav' to={"#"}>Cadastrar pedido</Link>
+                <Link className='linkNav' to={"/app/registerOrders"}>Cadastrar pedido</Link>
               </ContainerLink>
             </NavDropdown>
 
@@ -87,7 +77,7 @@ function NavBar() {
           <Nav >
             <Nav.Link> <IconUser><SlUser /></IconUser>{username}</Nav.Link>
 
-            <Nav.Link onClick={logout}> <IconUser> <IoMdExit/></IconUser> Sair</Nav.Link>
+            <Nav.Link onClick={logout}> <IconUser> <IoMdExit /></IconUser> Sair</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

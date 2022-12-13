@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const booksControllers = require("../controllers/BooksControllers");
+const orderControllers = require("../controllers/OrdersControllers");
 const router = Router();
 const jwt = require("jsonwebtoken");
 
@@ -16,9 +16,6 @@ function verifyJWT(req, res, next) {
   });
 }
 
-router.post("/books", verifyJWT, booksControllers.createBooks);
-router.get("/books", verifyJWT, booksControllers.getBooks);
-router.get("/book/:id", verifyJWT, booksControllers.getBookToID)
-router.get("/book/title/:titulo", verifyJWT, booksControllers.getBookToName)
-router.put("/books", verifyJWT, booksControllers.updateBooks)
+router.post("/order", verifyJWT, orderControllers.createOrder);
+
 module.exports = router;

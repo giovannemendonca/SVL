@@ -90,7 +90,7 @@ function Books() {
 
     const token = localStorage.getItem('token')
 
-    await api.get(`/books/${idBook}`, {
+    await api.get(`/book/${idBook}`, {
       headers: {
         "x-acess-token": token
       }
